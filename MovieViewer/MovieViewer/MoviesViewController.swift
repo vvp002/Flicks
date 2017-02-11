@@ -19,7 +19,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     var isMoreDataLoading = false
     var refreshControl: UIRefreshControl!
-    //var filteredData: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +37,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")!
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")
+        let request = URLRequest(url: url!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
         // Display HUD right before the request is made
@@ -155,6 +154,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Handle scroll behavior here
         if (!isMoreDataLoading) {
@@ -176,7 +180,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
         let cell = sender as! UITableViewCell
         
         let indexPath = tableView.indexPath(for: cell)
@@ -189,8 +194,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         
         print("prepare for segue called")
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.orange
+        cell.selectedBackgroundView = backgroundView
     }
 
 }
