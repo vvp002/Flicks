@@ -16,9 +16,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var searchBar: UISearchBar!
     var movies: [NSDictionary]?
     var endpoint: String!
+    var filteredData: [String]!
     
     var isMoreDataLoading = false
     var refreshControl: UIRefreshControl!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +28,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
-        //tableView.rowHeight = UITableViewAutomaticDimension
         
         // Initialize a UIRefreshControl
         let refreshControl = UIRefreshControl()
