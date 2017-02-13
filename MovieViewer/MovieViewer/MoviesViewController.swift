@@ -19,6 +19,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var filteredData: [String]!
     
     var isMoreDataLoading = false
+    var offset = 0;
+    
     var refreshControl: UIRefreshControl!
     
     
@@ -143,13 +145,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         let task: URLSessionDataTask = session.dataTask(with: myRequest) { (data: Data?, response: URLResponse?, error: Error?) in
             
-        // Update flag
-        self.isMoreDataLoading = false
-                                                                        
-        // ... Use the new data to update the data source ...
-                                                                        
-        // Reload the tableView now that there is new data
-        self.tableView.reloadData()
+            // Update flag
+            self.isMoreDataLoading = false
+            
+            // ... Use the new data to update the data source ...
+            
+            // Reload the tableView now that there is new data
+            self.tableView.reloadData()
         }
         
         task.resume()
